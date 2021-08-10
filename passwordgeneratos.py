@@ -2,11 +2,67 @@ import string
 import random
 
 
+
+def randompassnano(digits,punt,size):
+    password= ()
+    if(isinstance(digits,bool) and isinstance(punt,bool) and isinstance(size,int)):
+        if digits == True and punt == True:
+            password = random.choices(string.punctuation+string.ascii_letters+string.digits,k=size)
+        elif digits == False and punt == True:
+            password = random.choices(string.punctuation+string.ascii_letters,k=size)
+        elif digits == True and punt == False:
+            password = random.choices(string.digits+string.ascii_letters,k=size)
+        elif digits == False and punt==False:
+            password = random.choices(string.ascii_letters,k=size)
+        vuelta = ""
+        for p in password:
+            vuelta += p
+        return vuelta
+
+    else:    
+        return print("Parametros incorrectos")            
+        
+
+def randompassmini(tamanio):
+    puntsize = random.randrange(tamanio)
+    digsize = random.randrange(tamanio)
+    lettersize = random.randrange(tamanio)
+
+    internalpassize = digsize + puntsize + lettersize
+
+    if puntsize + digsize + lettersize != tamanio:
+        lettersize = lettersize + tamanio - internalpassize
+
+ 
+
+    
+    passletter = random.choices(list(string.ascii_letters),k=lettersize)
+    print(passletter)    
+    
+    passdigit = random.choice(list(string.digits),k=digsize)
+    print(passletter)
+   
+    passpunt = random.choice(list(string.punctuation),k=puntsize)
+    print(passletter)    
+
+    password = str(passdigit) + str(passletter) + str(passpunt)
+
+    password = list(random.shuffle(list(password)))
+    
+
+    print(str(password))
+    print(tamanio)
+    
+    password = str(random.choices(password,k=int(tamanio)))
+    
+    return password     
+
 def randompass(inputdigits,inputpunt,tamanio):
     #De base las contraseñas van a tener mayusculas y minusculas
     #también definimos si tienen signos de puntuación y numeros
     
     primalpass =  random.choice(list(string.ascii_letters)) + random.choice(list(string.ascii_letters)) + random.choice(list(string.ascii_letters)) + random.choice(list(string.ascii_letters))
+    
     
     if tamanio < 13: return False
 
@@ -40,14 +96,14 @@ def randompass(inputdigits,inputpunt,tamanio):
             puntmesh.append(random.choice(list(string.punctuation)))
             puntsize = puntsize - 1
         while lettersize > 0:
-           lettermesh.append(random.choice(list(string.ascii_letters)))
            lettersize = lettersize - 1
         primalpass = str(primalpass) + str(lettermesh) + str(digmesh) + str(puntsize)
-        passwrd = random.shuffle(list(primalpass))
+        passwrd = str(random.shuffle(list(primalpass)))
+        return passwrd
     
     #generamos el caso de solo numeros
 
-    elif inputdigits == True and inputpunt == False:
+    if inputdigits == True and inputpunt == False:
         puntsize = 0      
         digsize = random.randrange(tamanio-10)
         lettersize = tamanio - puntsize - digsize
@@ -65,11 +121,14 @@ def randompass(inputdigits,inputpunt,tamanio):
            lettermesh.append(random.choice(list(string.ascii_letters)))
            lettersize = lettersize - 1
         primalpass = str(primalpass) + str(lettermesh) + str(digmesh) + str(puntsize)
-        passwrd = random.shuffle(list(primalpass))   
-        
+        passwrd = random.shuffle(list(primalpass))
+        return passwrd
+          
+       
     #Geneeramos el bloque de no numeros pero si caracteres de puntuación
     
-    elif inputdigits == False and inputpunt == True:
+
+    if inputdigits == False and inputpunt == True:
         puntsize = random.randrange(tamanio-10)
         digsize = 0
         lettersize = tamanio - puntsize - digsize
@@ -87,10 +146,13 @@ def randompass(inputdigits,inputpunt,tamanio):
            lettermesh.append(random.choice(list(string.ascii_letters)))
            lettersize = lettersize - 1
         primalpass = str(primalpass) + str(lettermesh) + str(digmesh) + str(puntsize)
-        passwrd = random.shuffle(list(primalpass)) 
+        passwrd = random.shuffle(list(primalpass))
+        return passwrd
+        
+
 
 #Generamos el caso de ni numeros ni caracteres de puntuación
-    elif inputdigits == False and inputpunt == False:
+    else:
         puntsize = 0
         digsize = 0
         lettersize = tamanio - len(primalpass)
@@ -107,16 +169,9 @@ def randompass(inputdigits,inputpunt,tamanio):
         while lettersize > 0:
            lettermesh.append(random.choice(list(string.ascii_letters)))
            lettersize = lettersize - 1
-        primalpass = primalpass + lettermesh + digmesh + puntsize
-        passwrd = str(random.shuffle(list(primalpass))) 
-    return passwrd
+        primalpass = str(primalpass) + str(lettermesh) + str(digmesh) + str(puntsize)
+        passwrd = str(random.shuffle(list(primalpass)))
+        return passwrd
 
-
-
-
-
-print(randompass(True,True,25))
-
-#print(str(random.randint(5)))
 
 
