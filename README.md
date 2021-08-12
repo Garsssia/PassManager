@@ -1,2 +1,2 @@
 # PassManager
-Python password generator with GUI.
+Password generator with GUI.
